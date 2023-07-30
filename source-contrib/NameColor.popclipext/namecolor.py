@@ -47,7 +47,7 @@ def nameColor(color):
     color = color.upper()
 
     if len(color) % 3 == 0:
-        color = '#' + color
+        color = f'#{color}'
 
     if len(color) == 4:
         color = '#' + color[1] * 2 + color[2] * 2 + color[3] * 2
@@ -58,8 +58,8 @@ def nameColor(color):
     cl, df = -1, -1
 
     for i, n in enumerate(names):
-        if color == '#' + n[0]:
-            return ['#' + n[0], n[1], True]
+        if color == f'#{n[0]}':
+            return [f'#{n[0]}', n[1], True]
 
         ndf1 = (rv - n[2]) ** 2 + (gv - n[3]) ** 2 + (bv - n[4]) ** 2
         ndf2 = (hv - n[5]) ** 2 + (sv - n[6]) ** 2 + (lv - n[7]) ** 2
@@ -69,8 +69,11 @@ def nameColor(color):
             df = ndf
             cl = i
 
-    return ['#??????', 'No matching color name', True] if cl < 0 else \
-           ['#' + names[cl][0], names[cl][1], False]
+    return (
+        ['#??????', 'No matching color name', True]
+        if cl < 0
+        else [f'#{names[cl][0]}', names[cl][1], False]
+    )
 
 
 def hsl(color):

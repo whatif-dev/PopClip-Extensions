@@ -15,8 +15,7 @@ except NameError:
     setattr(__builtins__, 'False', 0)
 
 def has_key(x, y):
-    if hasattr(x, 'has_key'): return x.has_key(y)
-    else: return y in x
+    return x.has_key(y) if hasattr(x, 'has_key') else y in x
 
 try:
     import htmlentitydefs

@@ -11,7 +11,6 @@ title = os.environ['POPCLIP_BROWSER_TITLE']
 text = os.environ['POPCLIP_TEXT']
 html = os.environ['POPCLIP_HTML']
 modifiers = os.environ['POPCLIP_MODIFIER_FLAGS']
-url = os.environ['POPCLIP_BROWSER_URL']
 path = os.environ['POPCLIP_OPTION_LIBRARY']
 name = str(uuid.uuid1()).upper()
 
@@ -36,7 +35,7 @@ else:
         "data": html
     })
 
-if url:
+if url := os.environ['POPCLIP_BROWSER_URL']:
     cells.append({
         "type": "text",
         "data": "<p>Clipped from: <a href=\"{0}\">{0}</a></p>".format(url)
@@ -55,12 +54,12 @@ meta = {
     "uuid": name
 }
 
-newpath = path + '/Inbox.qvnotebook/' + name + '.qvnote'
+newpath = f'{path}/Inbox.qvnotebook/{name}.qvnote'
 
 if not os.path.exists(newpath): os.makedirs(newpath)
 
-with open(newpath + "/content.json", 'w') as f:
+with open(f"{newpath}/content.json", 'w') as f:
     json.dump(content, f, sort_keys=True, indent=2)
 
-with open(newpath + "/meta.json", 'w') as f:
+with open(f"{newpath}/meta.json", 'w') as f:
     json.dump(meta, f, sort_keys=True, indent=2)
